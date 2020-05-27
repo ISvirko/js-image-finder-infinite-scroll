@@ -6,12 +6,10 @@ import { success, error, defaultModules } from '@pnotify/core/dist/PNotify.js';
 import { defaults } from '@pnotify/core';
 defaults.delay = 2000;
 
-import * as basicLightbox from 'basiclightbox';
-import 'basiclightbox/dist/basicLightbox.min.css';
-
 import { refs } from './refs.js';
 import pictureItemTpl from '../templates/picture-item.hbs';
 import spinner from './spinner';
+import { openLargeImg } from './modalWindow';
 
 refs.searchForm.addEventListener('submit', searchImagesHandler);
 refs.galleryList.addEventListener('click', openLargeImg);
@@ -83,24 +81,6 @@ function searchImagesHandler(e) {
 
 function clearGallery() {
   refs.galleryList.innerHTML = '';
-}
-
-function openLargeImg(e) {
-  if (e.target.nodeName !== 'IMG') return;
-  const largeImg = e.target.dataset.source;
-  const instance = basicLightbox.create(
-    `<img src='${largeImg} class='largeImg' width='800' height='600'/>'`,
-  );
-  instance.show();
-
-  window.addEventListener('keydown', closeModalHandler);
-
-  function closeModalHandler(e) {
-    if (e.code === 'Escape') {
-      instance.close();
-      window.removeEventListener('keydown', closeModalHandler);
-    }
-  }
 }
 
 function upDownArrowHandler() {
