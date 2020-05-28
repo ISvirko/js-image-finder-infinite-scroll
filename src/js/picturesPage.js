@@ -8,8 +8,9 @@ defaults.delay = 2000;
 
 import { refs } from './refs.js';
 import pictureItemTpl from '../templates/picture-item.hbs';
-import spinner from './spinner';
-import { openLargeImg } from './modalWindow';
+import spinner from './components/spinner';
+import { openLargeImg } from './components/modalWindow';
+import { upDownArrowHandler } from './components/upDownArrow.js';
 
 refs.searchForm.addEventListener('submit', searchImagesHandler);
 refs.galleryList.addEventListener('click', openLargeImg);
@@ -81,23 +82,4 @@ function searchImagesHandler(e) {
 
 function clearGallery() {
   refs.galleryList.innerHTML = '';
-}
-
-function upDownArrowHandler() {
-  refs.toTopBtn.classList.remove('toTopBtn');
-  refs.toTopBtn.classList.add('toBottomBtn');
-
-  if (window.pageYOffset === 0) {
-    refs.toTopBtn.classList.remove('toBottomBtn');
-    refs.toTopBtn.classList.add('toTopBtn');
-  }
-
-  smoothScrollHandler();
-}
-
-function smoothScrollHandler() {
-  window.scrollTo({
-    top: document.documentElement.offsetHeight,
-    behavior: 'smooth',
-  });
 }
