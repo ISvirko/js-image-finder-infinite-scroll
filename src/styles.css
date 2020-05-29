@@ -105,6 +105,9 @@ input {
 .is-hidden {
   display: none;
 }
+.largeImg {
+  max-height: 100vh;
+}
 .modal-close-btn {
   position: absolute;
   top: 8px;

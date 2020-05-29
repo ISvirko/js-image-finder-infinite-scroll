@@ -11,17 +11,15 @@ export function openLargeImg(e) {
   );
 
   instance.show();
+
   const closeBtn = document.querySelector('[data-action="close-lightbox"]');
   closeBtn.addEventListener('click', closeModalHandler);
   window.addEventListener('keydown', closeModalHandler);
 
   function closeModalHandler(e) {
-    if (e.code === 'Escape') {
-      instance.close();
-      window.removeEventListener('keydown', closeModalHandler);
-    }
-    if (e.target === closeBtn) {
-      instance.close();
-    }
+    (e.code === 'Escape' || e.target === closeBtn) && instance.close();
+
+    window.removeEventListener('keydown', closeModalHandler);
+    closeBtn.removeEventListener('click', closeModalHandler);
   }
 }
