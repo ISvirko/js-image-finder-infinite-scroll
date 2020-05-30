@@ -1,11 +1,5 @@
 import InfiniteScroll from 'infinite-scroll';
 
-import '@pnotify/core/dist/PNotify.css';
-import '@pnotify/core/dist/BrightTheme.css';
-import { success, error, defaultModules } from '@pnotify/core/dist/PNotify.js';
-import { defaults } from '@pnotify/core';
-defaults.delay = 2000;
-
 import { refs } from './refs.js';
 import pictureItemTpl from '../templates/picture-item.hbs';
 import spinner from './components/spinner';
@@ -27,9 +21,19 @@ const infScroll = new InfiniteScroll(refs.galleryList, {
 });
 
 infScroll.inputValue = '';
-spinner.show();
+infScrollOnLoad();
 
-infScroll.on('load', response => {
+function infScrollOnLoad() {
+  infScroll.on('load', response => {
+    infScrollDisplayImgs(response);
+    spinner.hide();
+  });
+
+  infScroll.loadNextPage();
+  spinner.show();
+}
+
+function infScrollDisplayImgs(response) {
   const pictures = JSON.parse(response);
 
   const markup = pictureItemTpl(pictures.hits);
@@ -38,46 +42,17 @@ infScroll.on('load', response => {
 
   const parsedItems = proxyEl.querySelectorAll('.photo-card');
   infScroll.appendItems(parsedItems);
-  spinner.hide();
-});
-
-infScroll.loadNextPage();
+}
 
 function searchImagesHandler(e) {
   e.preventDefault();
   clearGallery();
 
-  const input = refs.searchForm.elements.query;
-  const inputValue = input.value;
+  const inputValue = refs.searchForm.elements.query.value;
   if (!inputValue) return;
   infScroll.inputValue = inputValue;
 
-  infScroll.option({
-    path() {
-      return `https://cors-anywhere.herokuapp.com/https://pixabay.com/api/?image_type=photo&orientation=horizontal&q=${this.inputValue}&page=${this.pageIndex}&per_page=12&key=${apiKey}`;
-    },
-  });
-
-  spinner.show();
-
-  infScroll.on('load', response => {
-    spinner.hide();
-    const pictures = JSON.parse(response);
-
-    if (pictures.hits.length < 1) {
-      error('No images matching your query have been found');
-      return;
-    }
-
-    const markup = pictureItemTpl(pictures.hits);
-    const proxyEl = document.createElement('div');
-    proxyEl.innerHTML = markup;
-
-    const parsedItems = proxyEl.querySelectorAll('.photo-card');
-    infScroll.appendItems(parsedItems);
-  });
-
-  infScroll.loadNextPage();
+  infScrollOnLoad();
 }
 
 function clearGallery() {
