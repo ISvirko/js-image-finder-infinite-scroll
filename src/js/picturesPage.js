@@ -13,6 +13,7 @@ refs.toTopBtn.addEventListener('click', upDownArrowHandler);
 const apiKey = '16727206-7ae7a1f614d6d42142bf6389f';
 
 const infScroll = new InfiniteScroll(refs.galleryList, {
+  inputValue: '',
   responseType: 'text',
   history: false,
   path: function () {
@@ -36,12 +37,11 @@ function infScrollOnLoad() {
 function infScrollDisplayImgs(response) {
   const pictures = JSON.parse(response);
 
-  const markup = pictureItemTpl(pictures.hits);
-  const proxyEl = document.createElement('div');
-  proxyEl.innerHTML = markup;
+  renderGallery(pictures.hits);
+}
 
-  const parsedItems = proxyEl.querySelectorAll('.photo-card');
-  infScroll.appendItems(parsedItems);
+function renderGallery(pics) {
+  refs.galleryList.insertAdjacentHTML('beforeend', pictureItemTpl(pics));
 }
 
 function searchImagesHandler(e) {
