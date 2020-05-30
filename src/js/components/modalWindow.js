@@ -9,32 +9,6 @@ export function openLargeImg(e) {
   const instance = basicLightbox.create(
     `<div><img src='${largeImg}' class='largeImg'/></div>
     <button class='modal-close-btn' data-action="close-lightbox"></button>`,
-    {
-      // onShow: instance => {
-      //   window.addEventListener('keyup', keybordNav);
-      //   function keybordNav(e) {
-      //     console.log(e.code);
-      //     const allImg = refs.galleryList.querySelectorAll('img');
-      //     const imagesArrSrc = [];
-      //     allImg.forEach(img => imagesArrSrc.push(img));
-      //     for (let i = 0; i < imagesArrSrc.length; i += 1) {
-      //       if (e.code === 'ArrowRight') {
-      //         console.log('next');
-      //         if (i < imagesArrSrc.length - 1) {
-      //           console.log(imagesArrSrc[i].dataset.source);
-      //           console.log(imagesArrSrc[i + 1].dataset.source);
-      //         }
-      //         imagesArrSrc[i].dataset.source =
-      //           imagesArrSrc[i + 1].dataset.source;
-      //       }
-      //       // if (e.code === 'ArrowLeft') {
-      //       //   console.log('prev');
-      //       //   e.target.dataset.source = imagesArrSrc[i - 1].dataset.source;
-      //       // }
-      //     }
-      //   }
-      // },
-    },
   );
 
   instance.show();
