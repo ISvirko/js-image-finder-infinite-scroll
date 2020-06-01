@@ -1,18 +1,18 @@
 import InfiniteScroll from 'infinite-scroll';
 
-import { refs } from './refs.js';
-import pictureItemTpl from '../templates/picture-item.hbs';
+import refs from './refs.js';
 import spinner from './components/spinner';
-import { openLargeImg } from './components/modalWindow';
-import { upDownArrowHandler } from './components/upDownArrow.js';
+import openLargeImg from './components/modalWindow';
+import upDownArrowHandler from './components/upDownArrow.js';
+import addMasonryLayout from './masonry';
 
 refs.searchForm.addEventListener('submit', searchImagesHandler);
-refs.galleryList.addEventListener('click', openLargeImg);
+refs.gallery.addEventListener('click', openLargeImg);
 refs.toTopBtn.addEventListener('click', upDownArrowHandler);
 
 const apiKey = '16727206-7ae7a1f614d6d42142bf6389f';
 
-const infScroll = new InfiniteScroll(refs.galleryList, {
+const infScroll = new InfiniteScroll('.grid', {
   inputValue: '',
   responseType: 'text',
   history: false,
@@ -27,6 +27,7 @@ infScrollOnLoad();
 function infScrollOnLoad() {
   infScroll.on('load', response => {
     infScrollDisplayImgs(response);
+
     spinner.hide();
   });
 
@@ -36,12 +37,7 @@ function infScrollOnLoad() {
 
 function infScrollDisplayImgs(response) {
   const pictures = JSON.parse(response);
-
-  renderGallery(pictures.hits);
-}
-
-function renderGallery(pics) {
-  refs.galleryList.insertAdjacentHTML('beforeend', pictureItemTpl(pics));
+  addMasonryLayout(pictures);
 }
 
 function searchImagesHandler(e) {
@@ -56,5 +52,7 @@ function searchImagesHandler(e) {
 }
 
 function clearGallery() {
-  refs.galleryList.innerHTML = '';
+  refs.gallery.innerHTML = `
+      <div class="grid-sizer"></div>
+      `;
 }

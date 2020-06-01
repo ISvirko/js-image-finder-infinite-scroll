@@ -1,6 +1,6 @@
-import { refs } from '../refs';
+import refs from '../refs';
 
-export function upDownArrowHandler() {
+function upDownArrowHandler() {
   refs.toTopBtn.classList.remove('toTopBtn');
   refs.toTopBtn.classList.add('toBottomBtn');
 
@@ -12,9 +12,11 @@ export function upDownArrowHandler() {
   smoothScrollHandler();
 }
 
-export function smoothScrollHandler() {
+function smoothScrollHandler() {
   window.scrollTo({
     top: document.documentElement.offsetHeight,
     behavior: 'smooth',
   });
 }
+
+export default upDownArrowHandler;

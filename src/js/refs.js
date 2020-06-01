@@ -1,7 +1,8 @@
-export const refs = {
-  container: document.querySelector('.container'),
+const refs = {
   searchForm: document.forms.searchForm,
-  galleryList: document.querySelector('#galleryList'),
+  gallery: document.querySelector('.grid'),
   loadMoreBtn: document.querySelector('.load-more-btn'),
   toTopBtn: document.querySelector('.toTopBtn'),
 };
+
+export default refs;

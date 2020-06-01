@@ -27,6 +27,12 @@ a {
   color: rgb(124, 124, 124);
 }
 
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -46,11 +52,11 @@ input {
 }
 
 /* GALLERY */
-.gallery {
+/* .grid-item {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   grid-gap: 16px;
-}
+} */
 .photo-card {
   text-align: center;
   border: 1px dotted rgb(99, 99, 99);
@@ -130,6 +136,13 @@ input {
   background-position: center;
   background-size: 60%;
   background-repeat: no-repeat;
+}
+
+/*GRID*/
+.grid-sizer,
+.grid-item {
+  width: 31%;
+  margin-bottom: 10px;
 }
 
 /* SPINNER */

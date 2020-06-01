@@ -2,18 +2,18 @@ import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 import { refs } from '../refs';
 
-export function openLargeImg(e) {
+function openLargeImg(e) {
   if (e.target.nodeName !== 'IMG') return;
-  const largeImg = e.target.dataset.source;
 
   const instance = basicLightbox.create(
-    `<div><img src='${largeImg}' class='largeImg'/></div>
+    `<div><img src='${e.target.dataset.source}' class='largeImg'/></div>
     <button class='modal-close-btn' data-action="close-lightbox"></button>`,
   );
 
   instance.show();
 
   const closeBtn = document.querySelector('[data-action="close-lightbox"]');
+
   closeBtn.addEventListener('click', closeModalHandler);
   window.addEventListener('keydown', closeModalHandler);
 
@@ -24,3 +24,5 @@ export function openLargeImg(e) {
     closeBtn.removeEventListener('click', closeModalHandler);
   }
 }
+
+export default openLargeImg;
